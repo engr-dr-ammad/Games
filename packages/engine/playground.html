@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Games Engine - Playground</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: #1a1a2e;
+        color: #eee;
+        overflow: hidden;
+      }
+
+      #canvas {
+        display: block;
+        width: 100%;
+        height: 100vh;
+      }
+
+      .ui {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        background: rgba(0, 0, 0, 0.7);
+        padding: 20px;
+        border-radius: 8px;
+        font-size: 14px;
+        line-height: 1.6;
+        max-width: 300px;
+      }
+
+      .ui h2 {
+        margin-bottom: 10px;
+        color: #4a90e2;
+      }
+
+      .ui p {
+        margin: 5px 0;
+      }
+
+      .controls {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        background: rgba(0, 0, 0, 0.7);
+        padding: 15px;
+        border-radius: 8px;
+      }
+
+      button {
+        background: #4a90e2;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-right: 10px;
+        font-size: 14px;
+      }
+
+      button:hover {
+        background: #357abd;
+      }
+
+      button:active {
+        transform: scale(0.98);
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+
+    <div class="ui">
+      <h2>🎮 Games Engine v0.1.0</h2>
+      <p><strong>Status:</strong> Loading...</p>
+      <p><strong>Entities:</strong> <span id="entity-count">0</span></p>
+      <p><strong>FPS:</strong> <span id="fps">60</span></p>
+      <p><strong>Mode:</strong> <span id="mode">Runtime</span></p>
+    </div>
+
+    <div class="controls">
+      <button onclick="createCube()">Add Cube</button>
+      <button onclick="createSphere()">Add Sphere</button>
+      <button onclick="resetScene()">Reset</button>
+    </div>
+
+    <script type="module">
+      import * as THREE from 'https://cdn.jsdelivr.net/npm/three@r128/build/three.module.js';
+
+      // Engine implementation (simplified for playground)
+      class GameEngine {
+        constructor(canvas) {
+          this.canvas = canvas;
+          this.scene = new THREE.Scene();
+          this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+          this.renderer.setSize(window.innerWidth, window.innerHeight);
+          this.renderer.setClearColor(0x1a1a2e);
+          this.renderer.shadowMap.enabled = true;
+
+          this.camera = new THREE.PerspectiveCamera(
+            75,
+            window.innerWidth / window.innerHeight,
+            0.1,
+            1000
+          );
+          this.camera.position.set(0, 5, 10);
+          this.camera.lookAt(0, 0, 0);
+
+          // Lighting
+          const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+          this.scene.add(ambientLight);
+
+          const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+          directionalLight.position.set(10, 20, 10);
+          directionalLight.castShadow = true;
+          this.scene.add(directionalLight);
+
+          // Ground
+          const groundGeometry = new THREE.PlaneGeometry(100, 100);
+          const groundMaterial = new THREE.MeshStandardMaterial({ color: 0x2d3748 });
+          const ground = new THREE.Mesh(groundGeometry, groundMaterial);
+          ground.rotation.x = -Math.PI / 2;
+          ground.receiveShadow = true;
+          this.scene.add(ground);
+
+          this.entities = [];
+          this.running = false;
+          this.frameCount = 0;
+          this.lastFpsTime = performance.now();
+
+          window.addEventListener('resize', () => this.onWindowResize());
+          this.animate();
+        }
+
+        createEntity(type) {
+          let geometry;
+          const colors = [0x4a90e2, 0x7cb342, 0xfb8c00, 0xe91e63];
+          const color = colors[Math.floor(Math.random() * colors.length)];
+
+          if (type === 'sphere') {
+            geometry = new THREE.SphereGeometry(0.5, 32, 32);
+          } else {
+            geometry = new THREE.BoxGeometry(1, 1, 1);
+          }
+
+          const material = new THREE.MeshStandardMaterial({
+            color,
+            metalness: 0.3,
+            roughness: 0.7,
+          });
+
+          const mesh = new THREE.Mesh(geometry, material);
+          mesh.position.set(
+            Math.random() * 10 - 5,
+            5 + Math.random() * 5,
+            Math.random() * 10 - 5
+          );
+          mesh.castShadow = true;
+          mesh.receiveShadow = true;
+
+          // Add physics simulation
+          mesh.velocity = new THREE.Vector3(
+            (Math.random() - 0.5) * 2,
+            0,
+            (Math.random() - 0.5) * 2
+          );
+
+          this.scene.add(mesh);
+          this.entities.push(mesh);
+
+          return mesh;
+        }
+
+        update() {
+          const gravity = new THREE.Vector3(0, -9.81, 0);
+          const dt = 1 / 60;
+
+          this.entities.forEach((entity) => {
+            // Apply gravity
+            entity.velocity.y += gravity.y * dt;
+
+            // Damping
+            entity.velocity.multiplyScalar(0.99);
+
+            // Update position
+            entity.position.add(entity.velocity.clone().multiplyScalar(dt));
+
+            // Ground collision
+            if (entity.position.y < 0.5) {
+              entity.position.y = 0.5;
+              entity.velocity.y = -entity.velocity.y * 0.6;
+            }
+
+            // Bounds
+            if (Math.abs(entity.position.x) > 50) {
+              entity.position.x = Math.sign(entity.position.x) * 50;
+              entity.velocity.x *= -0.6;
+            }
+            if (Math.abs(entity.position.z) > 50) {
+              entity.position.z = Math.sign(entity.position.z) * 50;
+              entity.velocity.z *= -0.6;
+            }
+
+            // Remove if too low
+            if (entity.position.y < -100) {
+              this.scene.remove(entity);
+              this.entities.splice(this.entities.indexOf(entity), 1);
+            }
+          });
+
+          // Update UI
+          document.getElementById('entity-count').textContent = this.entities.length;
+
+          // FPS counter
+          this.frameCount++;
+          const now = performance.now();
+          if (now - this.lastFpsTime >= 1000) {
+            document.getElementById('fps').textContent = this.frameCount;
+            this.frameCount = 0;
+            this.lastFpsTime = now;
+          }
+        }
+
+        animate = () => {
+          requestAnimationFrame(this.animate);
+          this.update();
+          this.renderer.render(this.scene, this.camera);
+        };
+
+        onWindowResize() {
+          this.camera.aspect = window.innerWidth / window.innerHeight;
+          this.camera.updateProjectionMatrix();
+          this.renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        reset() {
+          this.entities.forEach((entity) => this.scene.remove(entity));
+          this.entities = [];
+        }
+
+        start() {
+          this.running = true;
+          document.getElementById('mode').textContent = 'Playing';
+        }
+
+        stop() {
+          this.running = false;
+          document.getElementById('mode').textContent = 'Stopped';
+        }
+      }
+
+      // Initialize
+      const canvas = document.getElementById('canvas');
+      const engine = new GameEngine(canvas);
+
+      // Expose to global for button handlers
+      window.engine = engine;
+      window.createCube = () => engine.createEntity('box');
+      window.createSphere = () => engine.createEntity('sphere');
+      window.resetScene = () => engine.reset();
+
+      engine.start();
+      console.log('🎮 Games Engine Playground Ready!');
+      console.log('Click buttons to add objects to the scene');
+    </script>
+  </body>
+</html>
