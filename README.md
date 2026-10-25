@@ -15,9 +15,11 @@ Create a collaborative game creation environment where kids can:
 ```
 games-platform/
 ├── packages/
-│   ├── engine/        # Core game engine (3D/2D rendering, physics, scripting)
-│   ├── editor/        # Game editor UI (Web + Desktop)
-│   └── templates/     # Game templates & examples
+│   ├── engine/                ✅ Phase 1 - Core game engine
+│   ├── editor/                ✅ Phase 2 - Web-based game editor
+│   └── templates/
+│       └── platformer/        ✅ Phase 3 - Complete 3D platformer game
+├── turbo.json                 Monorepo configuration
 ├── README.md
 └── package.json
 ```
@@ -32,28 +34,33 @@ Core game engine featuring:
 - **Entity System** for game objects
 - **Scripting** with JavaScript VM
 - **Asset Management** for models and textures
+- 207 MCP tools through REA integration
 
 **Status**: ✅ Phase 1 - Core Engine Complete
 
 ### [@games/editor](./packages/editor/)
 
-Game editor with:
-- Visual scene editor (drag-drop)
-- Property inspector
-- Script editor
-- Play/test mode
-- Asset library
+Web-based game editor with:
+- **Visual 3D Viewport** - Real-time rendering
+- **Scene Hierarchy** - Entity tree with parent-child relationships
+- **Property Inspector** - Edit transforms and physics properties
+- **Play Testing** - Test games directly in editor
+- **Save/Load System** - Export/import games as JSON
+- **Keyboard Shortcuts** - Quick access to tools (C, S, Space)
 
-**Status**: 📋 Phase 2 - In Progress
+**Status**: ✅ Phase 2 - Web Editor Complete
 
-### [@games/templates](./packages/templates/)
+### [@games/templates/platformer](./packages/templates/platformer/)
 
-Pre-built game templates:
-- 3D Platformer
-- 2D Platformer
-- Puzzle Game
+Complete 3D platformer game template featuring:
+- **Player Controller** - WASD movement + jumping with physics
+- **Training Level** - 8 platforms with increasing difficulty
+- **Game Mechanics** - Coin collection, scoring, victory conditions
+- **Fully Playable** - Load game.json in editor and play
+- **Customizable** - Easy to modify difficulty and level design
+- **Educational** - Learn game development by example
 
-**Status**: 📋 Phase 3 - Planned
+**Status**: ✅ Phase 3 - Platformer Template Complete
 
 ## 🚀 Quick Start
 
@@ -82,35 +89,46 @@ open playground.html
 
 ## 🎯 Roadmap
 
-### Phase 1: Core Engine ✅
+### Phase 1: Core Engine ✅ Complete
 - [x] 3D Rendering (Three.js)
-- [x] Physics simulation
-- [x] Entity system
-- [x] Scripting VM
-- [x] Game loop
+- [x] Physics simulation with gravity & collisions
+- [x] Entity system with hierarchy
+- [x] Scripting VM with JavaScript
+- [x] Game loop (60 FPS, fixed timestep)
+- [x] Playground demo with live editing
 
-### Phase 2: Editor (In Progress)
-- [ ] Web-based editor UI
-- [ ] Visual scene builder
-- [ ] Property editor
-- [ ] Script editor
-- [ ] Play/test mode
+### Phase 2: Web Editor ✅ Complete
+- [x] Web-based editor UI (Vue 3)
+- [x] Visual 3D scene viewport
+- [x] Property inspector with real-time editing
+- [x] Hierarchical scene tree
+- [x] Play/test mode directly in editor
+- [x] Save/load games as JSON
+- [x] Keyboard shortcuts & asset library
 
-### Phase 3: Templates
-- [ ] 3D platformer template
-- [ ] 2D platformer template
-- [ ] Puzzle template
+### Phase 3: Game Template ✅ Complete
+- [x] 3D platformer with full gameplay
+- [x] Player controller (WASD + jumping)
+- [x] Training level with 8 platforms
+- [x] Coin collection system
+- [x] Score tracking & victory condition
+- [x] Fall detection & respawn
+- [x] Fully playable and customizable
 
-### Phase 4: Desktop App
-- [ ] Electron wrapper
-- [ ] Offline support
-- [ ] Game packaging
+### Phase 4: Desktop App (Coming Soon)
+- [ ] Electron wrapper for Windows/Mac/Linux
+- [ ] Offline editor support
+- [ ] Game packaging & distribution
+- [ ] Plugin system for extensions
+- [ ] Performance profiling tools
 
-### Phase 5: Storage & Sharing
-- [ ] Game file format
-- [ ] Local storage
-- [ ] Game library
-- [ ] Share & publish
+### Phase 5: Advanced Features (Future)
+- [ ] 2D game support
+- [ ] Asset importer (models, textures, audio)
+- [ ] Animation system
+- [ ] Multiplayer framework
+- [ ] Cloud save & sharing
+- [ ] Community game gallery
 
 ## 🛠️ Tech Stack
 
