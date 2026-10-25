@@ -1,0 +1,14 @@
+{
+  "name": "@games/template-platformer",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "3D platformer game template for Games platform",
+  "main": "dist/game.json",
+  "scripts": {
+    "build": "node scripts/build.js",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "@games/engine": "workspace:*"
+  }
+}

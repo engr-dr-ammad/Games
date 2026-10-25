@@ -1,0 +1,243 @@
+{
+  "version": "0.1.0",
+  "name": "Platformer - Training Course",
+  "description": "A beginner-friendly 3D platformer game to learn the Games platform",
+  "createdAt": "2026-10-25T00:00:00Z",
+  "lastModified": "2026-10-25T00:00:00Z",
+  "entities": [
+    {
+      "id": "ground-001",
+      "name": "StartPlatform",
+      "type": "model",
+      "parent": null,
+      "children": [],
+      "transform": {
+        "position": [0, 0, 0],
+        "rotation": [0, 0, 0],
+        "scale": [4, 0.5, 4]
+      },
+      "rigidBody": {
+        "mass": 0,
+        "shape": "box",
+        "size": [8, 1, 8],
+        "friction": 0.6,
+        "restitution": 0
+      },
+      "scripts": [],
+      "visible": true,
+      "active": true
+    },
+    {
+      "id": "plat-001",
+      "name": "Platform1",
+      "type": "model",
+      "parent": null,
+      "children": [],
+      "transform": {
+        "position": [5, 1, 0],
+        "rotation": [0, 0, 0],
+        "scale": [2, 0.5, 2]
+      },
+      "rigidBody": {
+        "mass": 0,
+        "shape": "box",
+        "size": [4, 1, 4],
+        "friction": 0.6,
+        "restitution": 0
+      },
+      "scripts": [],
+      "visible": true,
+      "active": true
+    },
+    {
+      "id": "coin-001",
+      "name": "Coin1",
+      "type": "collectible",
+      "parent": null,
+      "children": [],
+      "transform": {
+        "position": [5, 2.5, 0],
+        "rotation": [0, 0, 0],
+        "scale": [0.3, 0.3, 0.3]
+      },
+      "rigidBody": {
+        "mass": 0,
+        "shape": "sphere",
+        "size": [0.6, 0.6, 0.6],
+        "friction": 0,
+        "restitution": 1
+      },
+      "scripts": [],
+      "visible": true,
+      "active": true
+    },
+    {
+      "id": "plat-002",
+      "name": "Platform2",
+      "type": "model",
+      "parent": null,
+      "children": [],
+      "transform": {
+        "position": [10, 2, 0],
+        "rotation": [0, 0, 0],
+        "scale": [2, 0.5, 2]
+      },
+      "rigidBody": {
+        "mass": 0,
+        "shape": "box",
+        "size": [4, 1, 4],
+        "friction": 0.6,
+        "restitution": 0
+      },
+      "scripts": [],
+      "visible": true,
+      "active": true
+    },
+    {
+      "id": "coin-002",
+      "name": "Coin2",
+      "type": "collectible",
+      "parent": null,
+      "children": [],
+      "transform": {
+        "position": [10, 3.5, 0],
+        "rotation": [0, 0, 0],
+        "scale": [0.3, 0.3, 0.3]
+      },
+      "rigidBody": {
+        "mass": 0,
+        "shape": "sphere",
+        "size": [0.6, 0.6, 0.6],
+        "friction": 0,
+        "restitution": 1
+      },
+      "scripts": [],
+      "visible": true,
+      "active": true
+    },
+    {
+      "id": "plat-003",
+      "name": "Platform3",
+      "type": "model",
+      "parent": null,
+      "children": [],
+      "transform": {
+        "position": [15, 3, 0],
+        "rotation": [0, 0, 0],
+        "scale": [2, 0.5, 2]
+      },
+      "rigidBody": {
+        "mass": 0,
+        "shape": "box",
+        "size": [4, 1, 4],
+        "friction": 0.6,
+        "restitution": 0
+      },
+      "scripts": [],
+      "visible": true,
+      "active": true
+    },
+    {
+      "id": "coin-003",
+      "name": "Coin3",
+      "type": "collectible",
+      "parent": null,
+      "children": [],
+      "transform": {
+        "position": [15, 4.5, 0],
+        "rotation": [0, 0, 0],
+        "scale": [0.3, 0.3, 0.3]
+      },
+      "rigidBody": {
+        "mass": 0,
+        "shape": "sphere",
+        "size": [0.6, 0.6, 0.6],
+        "friction": 0,
+        "restitution": 1
+      },
+      "scripts": [],
+      "visible": true,
+      "active": true
+    },
+    {
+      "id": "plat-004",
+      "name": "Platform4",
+      "type": "model",
+      "parent": null,
+      "children": [],
+      "transform": {
+        "position": [20, 2, 0],
+        "rotation": [0, 0, 0],
+        "scale": [2, 0.5, 2]
+      },
+      "rigidBody": {
+        "mass": 0,
+        "shape": "box",
+        "size": [4, 1, 4],
+        "friction": 0.6,
+        "restitution": 0
+      },
+      "scripts": [],
+      "visible": true,
+      "active": true
+    },
+    {
+      "id": "goal-001",
+      "name": "Goal",
+      "type": "goal",
+      "parent": null,
+      "children": [],
+      "transform": {
+        "position": [0, 1, 25],
+        "rotation": [0, 0, 0],
+        "scale": [1, 2, 1]
+      },
+      "rigidBody": {
+        "mass": 0,
+        "shape": "box",
+        "size": [2, 4, 2],
+        "friction": 0,
+        "restitution": 0
+      },
+      "scripts": [],
+      "visible": true,
+      "active": true
+    },
+    {
+      "id": "player-001",
+      "name": "Player",
+      "type": "player",
+      "parent": null,
+      "children": [],
+      "transform": {
+        "position": [0, 2, 0],
+        "rotation": [0, 0, 0],
+        "scale": [0.5, 1, 0.5]
+      },
+      "rigidBody": {
+        "mass": 1,
+        "shape": "box",
+        "size": [1, 2, 1],
+        "friction": 0.5,
+        "restitution": 0
+      },
+      "scripts": ["player-controller"],
+      "visible": true,
+      "active": true
+    }
+  ],
+  "scripts": [
+    {
+      "id": "player-controller",
+      "name": "PlayerController",
+      "code": "-- Player Controller Script\n-- WASD/Arrow keys to move\n-- Space to jump\n\nlocal moveSpeed = 6\nlocal jumpForce = 7\nlocal isGrounded = false\nlocal jumpCount = 0\nlocal maxJumps = 1\nlocal velocity = {x=0, y=0, z=0}\n\nfunction update(dt)\n  -- Read input\n  local moveX = 0\n  local moveZ = 0\n  \n  if input.forward then moveZ = moveZ - 1 end\n  if input.backward then moveZ = moveZ + 1 end\n  if input.left then moveX = moveX - 1 end\n  if input.right then moveX = moveX + 1 end\n  \n  -- Normalize movement\n  local moveLen = math.sqrt(moveX*moveX + moveZ*moveZ)\n  if moveLen > 0 then\n    moveX = moveX / moveLen\n    moveZ = moveZ / moveLen\n  end\n  \n  -- Apply movement\n  velocity.x = moveX * moveSpeed\n  velocity.z = moveZ * moveSpeed\n  \n  -- Handle jumping\n  if input.jump and isGrounded then\n    velocity.y = jumpForce\n    isGrounded = false\n    jumpCount = jumpCount + 1\n  end\n  \n  -- Apply gravity\n  velocity.y = velocity.y - 9.81 * dt\n  \n  -- Apply damping\n  velocity.x = velocity.x * 0.99\n  velocity.z = velocity.z * 0.99\nend\n\nfunction onCollision(other)\n  print(\"Collided with \" .. other.name)\n  if other.name == \"Goal\" then\n    print(\"Victory!\")\n  end\nend"
+    }
+  ],
+  "settings": {
+    "gravity": [0, -9.81, 0],
+    "ambientLight": {
+      "color": 16777215,
+      "intensity": 0.8
+    }
+  }
+}
